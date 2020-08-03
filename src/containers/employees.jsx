@@ -4,7 +4,9 @@ import axios from "axios";
 class employees extends Component {
 
     state = {
-        employee : []
+        firstName: "",
+        lastName: "",
+        thumbnail: ""
     }
 
     componentDidMount(){

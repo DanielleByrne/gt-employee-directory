@@ -7,7 +7,7 @@ import employees from "./containers/employees"
 function App() {
   return (
     <Router>
-      <Route exact path="/gt-employee-directory" component = {employees}/>
+      <Route exact path="/" component = {employees}/>
     </Router>
   );
 }
