@@ -6,8 +6,6 @@ class employees extends Component {
     search: "",
     employees: [],
     filteredEmployees: [],
-    //array made in tutoring, can't get it to combine with  what we did in class
-    // people: Array,
   };
 
   componentDidMount() {
@@ -18,28 +16,8 @@ class employees extends Component {
         employees: response.data.results,
         filteredEmployees: response.data.results,
       });
-      console.log(this.state.filteredEmployees)
+      console.log(this.state.filteredEmployees);
     });
-    //   .then((response) => {
-    //     console.log(response.data.results);
-    //     let data = response.data.results;
-    //     for (let i = 0; i < data.length; i++) {
-    //       employees[i] = {
-    //         firstName: data[i].name.first,
-    //         lastName: data[i].name.first,
-    //         thumbnail: data[i].picture.thumbnail,
-    //         id: i + 1,
-    //       };
-    //     }
-    //     this.setState({
-    //       people: employees,
-    //     });
-    //     console.log("the employees", employees);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    
   }
 
   sortEmployees = (field) => {
@@ -74,7 +52,6 @@ class employees extends Component {
       ),
     });
   };
-
 
   render() {
     return (
@@ -125,19 +102,20 @@ class employees extends Component {
             </thead>
             <tbody>
               {this.state.filteredEmployees.map((employee, index) => (
-                <tr key = {employee.login.uuid}>
-                  <td scope="row">{index +1}</td>
+                <tr key={employee.login.uuid}>
+                  <td scope="row">{index + 1}</td>
                   <td>{employee.name.first}</td>
                   <td>{employee.name.last}</td>
                   <td>
-                    <img src={employee.picture.thumbnail} alt="Employee Thumbnail" />
+                    <img
+                      src={employee.picture.thumbnail}
+                      alt="Employee Thumbnail"
+                    />
                   </td>
                 </tr>
               ))}
-              {/* take row and make a component , assign props in component for data (firstName ect), require component into this file, replace hardcode as map of state, inside map method generate compnent and pass props for as many results */}
             </tbody>
           </table>
-          {/* {this.state.people.map(person =>{})} */}
         </div>
       </div>
     );
