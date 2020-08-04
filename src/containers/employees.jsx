@@ -3,6 +3,7 @@ import React, { Component } from "react";
 
 class employees extends Component {
   state = {
+    search: "",
     employees: [
       {
         firstName: "Melissa",
@@ -65,31 +66,69 @@ class employees extends Component {
     });
   };
 
-//   sortEmployeesLastName = () => {
-//     function compare(a, b) {
-//       if (a.lastName > b.lastName) return 1;
-//       if (a.lastName < b.lastName) return -1;
-//       return 0;
-//     }
-//     const sortedEmployees = this.state.employees.sort(compare);
-//     this.setState({
-//       employees: sortedEmployees,
-//     });
-//   };
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+handleSearch = (event) => {
+    event.preventDefault();
+    this.filterEmployees();
+}
+
+  filterEmployees = () => {
+    const searchTerm = this.state.search.toLowerCase();
+    this.setState({
+      employees: this.state.employees.filter((employee) =>
+        employee.lastName.toLowerCase().includes(searchTerm)
+    ),
+    });
+  };
 
   render() {
     return (
       <div>
         <div className="container">
           <h1>Empoyee Directory </h1>
+          <div className="row">
+            <div className="col">
+              <form onSubmit = {this.handleSearch}>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search for an Employee by Last Name"
+                    name="search"
+                    value={this.state.search}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary">
+                  Search
+                </button>
+              </form>
+            </div>
+          </div>
           <table className="table table-striped table-dark">
             <thead>
               <tr>
                 <th scope="col">Id</th>
-                <th scope="col" onClick={()=>{this.sortEmployees("firstName")}}>
+                <th
+                  scope="col"
+                  onClick={() => {
+                    this.sortEmployees("firstName");
+                  }}
+                >
                   <button className="btn btn-dark">First Name</button>
                 </th>
-                <th scope="col" onClick={()=>{this.sortEmployees("lastName")}}>
+                <th
+                  scope="col"
+                  onClick={() => {
+                    this.sortEmployees("lastName");
+                  }}
+                >
                   <button className="btn btn-dark">Last Name</button>
                 </th>
                 <th scope="col">Thumbnail</th>
