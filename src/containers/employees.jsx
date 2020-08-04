@@ -1,38 +1,43 @@
 import React, { Component } from "react";
-// import axios from "axios";
+import axios from "axios";
 
 class employees extends Component {
   state = {
     search: "",
     employees: [
-      {
-        firstName: "Melissa",
-        id: 1,
-        lastName: "Larson",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/12.jpg",
-      },
-      {
-        firstName: "Madison",
-        id: 2,
-        lastName: "Taylor",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/89.jpg",
-      },
-      {
-        firstName: "Britanny",
-        id: 3,
-        lastName: "Larson",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/11.jpg",
-      },
+      //   {
+      //     firstName: "Melissa",
+      //     id: 1,
+      //     lastName: "Larson",
+      //     thumbnail: "https://randomuser.me/api/portraits/thumb/women/12.jpg",
+      //   },
+      //   {
+      //     firstName: "Madison",
+      //     id: 2,
+      //     lastName: "Taylor",
+      //     thumbnail: "https://randomuser.me/api/portraits/thumb/women/89.jpg",
+      //   },
+      //   {
+      //     firstName: "Britanny",
+      //     id: 3,
+      //     lastName: "Larson",
+      //     thumbnail: "https://randomuser.me/api/portraits/thumb/women/11.jpg",
+      //   },
     ],
+    filteredEmployees: [],
     //array made in tutoring, can't get it to combine with  what we did in class
     // people: Array,
   };
 
   componentDidMount() {
-    // this.sortEmployees();
-    // const employees = [];
-    // axios
-    //   .get("https://randomuser.me/api/?results=3")
+    axios.get("https://randomuser.me/api/?results=5").then((response) => {
+      console.log("the response", response.data.results);
+
+      this.setState({
+        employees: response.data.results,
+        filteredEmployees: response.data.results,
+      });
+    });
     //   .then((response) => {
     //     console.log(response.data.results);
     //     let data = response.data.results;
@@ -73,17 +78,17 @@ class employees extends Component {
     });
   };
 
-handleSearch = (event) => {
+  handleSearch = (event) => {
     event.preventDefault();
     this.filterEmployees();
-}
+  };
 
   filterEmployees = () => {
     const searchTerm = this.state.search.toLowerCase();
     this.setState({
-      employees: this.state.employees.filter((employee) =>
+      filteredEmployees: this.state.employees.filter((employee) =>
         employee.lastName.toLowerCase().includes(searchTerm)
-    ),
+      ),
     });
   };
 
@@ -94,7 +99,7 @@ handleSearch = (event) => {
           <h1>Empoyee Directory </h1>
           <div className="row">
             <div className="col">
-              <form onSubmit = {this.handleSearch}>
+              <form onSubmit={this.handleSearch}>
                 <div className="form-group">
                   <input
                     type="text"
@@ -135,7 +140,7 @@ handleSearch = (event) => {
               </tr>
             </thead>
             <tbody>
-              {this.state.employees.map((employee) => (
+              {this.state.filteredEmployees.map((employee) => (
                 <tr>
                   <th scope="row">{employee.id}</th>
                   <td>{employee.firstName}</td>
