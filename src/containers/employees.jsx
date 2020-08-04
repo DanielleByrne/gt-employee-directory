@@ -9,14 +9,14 @@ class employees extends Component {
   };
 
   componentDidMount() {
-    axios.get("https://randomuser.me/api/?results=5").then((response) => {
-      console.log("the response", response.data.results);
+    axios.get("https://randomuser.me/api/?results=50").then((response) => {
+    //   console.log("the response", response.data.results);
 
       this.setState({
         employees: response.data.results,
         filteredEmployees: response.data.results,
       });
-      console.log(this.state.filteredEmployees);
+    //   console.log(this.state.filteredEmployees);
     });
   }
 
@@ -103,7 +103,7 @@ class employees extends Component {
             <tbody>
               {this.state.filteredEmployees.map((employee, index) => (
                 <tr key={employee.login.uuid}>
-                  <td scope="row">{index + 1}</td>
+                  <th scope="row">{index + 1}</th>
                   <td>{employee.name.first}</td>
                   <td>{employee.name.last}</td>
                   <td>
