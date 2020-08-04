@@ -7,7 +7,7 @@ class employees extends Component {
       {
         firstName: "Melissa",
         id: 1,
-        lastName: "Melissa",
+        lastName: "Larson",
         thumbnail: "https://randomuser.me/api/portraits/thumb/women/12.jpg",
       },
       {
@@ -28,6 +28,7 @@ class employees extends Component {
   };
 
   componentDidMount() {
+    // this.sortEmployees();
     // const employees = [];
     // axios
     //   .get("https://randomuser.me/api/?results=3")
@@ -52,6 +53,30 @@ class employees extends Component {
     //   });
   }
 
+  sortEmployees = (field) => {
+    function compare(a, b) {
+      if (a[field] > b[field]) return 1;
+      if (a[field] < b[field]) return -1;
+      return 0;
+    }
+    const sortedEmployees = this.state.employees.sort(compare);
+    this.setState({
+      employees: sortedEmployees,
+    });
+  };
+
+//   sortEmployeesLastName = () => {
+//     function compare(a, b) {
+//       if (a.lastName > b.lastName) return 1;
+//       if (a.lastName < b.lastName) return -1;
+//       return 0;
+//     }
+//     const sortedEmployees = this.state.employees.sort(compare);
+//     this.setState({
+//       employees: sortedEmployees,
+//     });
+//   };
+
   render() {
     return (
       <div>
@@ -60,53 +85,31 @@ class employees extends Component {
           <table className="table table-striped table-dark">
             <thead>
               <tr>
-                {/* <th scope="col">Picture</th> */}
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
                 <th scope="col">Id</th>
+                <th scope="col" onClick={()=>{this.sortEmployees("firstName")}}>
+                  <button className="btn btn-dark">First Name</button>
+                </th>
+                <th scope="col" onClick={()=>{this.sortEmployees("lastName")}}>
+                  <button className="btn btn-dark">Last Name</button>
+                </th>
                 <th scope="col">Thumbnail</th>
               </tr>
             </thead>
             <tbody>
+              {this.state.employees.map((employee) => (
+                <tr>
+                  <th scope="row">{employee.id}</th>
+                  <td>{employee.firstName}</td>
+                  <td>{employee.lastName}</td>
+                  <td>
+                    <img src={employee.thumbnail} alt="Employee Thumbnail" />
+                  </td>
+                </tr>
+              ))}
               {/* take row and make a component , assign props in component for data (firstName ect), require component into this file, replace hardcode as map of state, inside map method generate compnent and pass props for as many results */}
-              <tr>
-                <td>{this.state.employees[0].firstName}</td>
-                <td>{this.state.employees[0].lastName}</td>
-                <td>{this.state.employees[0].id}</td>
-                <td>
-                  <img
-                    src={this.state.employees[0].thumbnail}
-                    alt="Employee Thumbnail"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>{this.state.employees[1].firstName}</td>
-                <td>{this.state.employees[1].lastName}</td>
-                <td>{this.state.employees[1].id}</td>
-                <td>
-                  <img
-                    src={this.state.employees[1].thumbnail}
-                    alt="Employee Thumbnail"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>{this.state.employees[2].firstName}</td>
-                <td>{this.state.employees[2].lastName}</td>
-                <td>{this.state.employees[2].id}</td>
-                <td>
-                  <img
-                    src={this.state.employees[2].thumbnail}
-                    alt="Employee Thumbnail"
-                  />
-                </td>
-              </tr>
             </tbody>
           </table>
-          {/* {this.state.people.map(person =>{
-
-        })} */}
+          {/* {this.state.people.map(person =>{})} */}
         </div>
       </div>
     );
