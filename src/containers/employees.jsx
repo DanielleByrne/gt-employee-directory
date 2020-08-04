@@ -4,26 +4,7 @@ import axios from "axios";
 class employees extends Component {
   state = {
     search: "",
-    employees: [
-      //   {
-      //     firstName: "Melissa",
-      //     id: 1,
-      //     lastName: "Larson",
-      //     thumbnail: "https://randomuser.me/api/portraits/thumb/women/12.jpg",
-      //   },
-      //   {
-      //     firstName: "Madison",
-      //     id: 2,
-      //     lastName: "Taylor",
-      //     thumbnail: "https://randomuser.me/api/portraits/thumb/women/89.jpg",
-      //   },
-      //   {
-      //     firstName: "Britanny",
-      //     id: 3,
-      //     lastName: "Larson",
-      //     thumbnail: "https://randomuser.me/api/portraits/thumb/women/11.jpg",
-      //   },
-    ],
+    employees: [],
     filteredEmployees: [],
     //array made in tutoring, can't get it to combine with  what we did in class
     // people: Array,
@@ -37,6 +18,7 @@ class employees extends Component {
         employees: response.data.results,
         filteredEmployees: response.data.results,
       });
+      console.log(this.state.filteredEmployees)
     });
     //   .then((response) => {
     //     console.log(response.data.results);
@@ -57,12 +39,13 @@ class employees extends Component {
     //   .catch((err) => {
     //     console.log(err);
     //   });
+    
   }
 
   sortEmployees = (field) => {
     function compare(a, b) {
-      if (a[field] > b[field]) return 1;
-      if (a[field] < b[field]) return -1;
+      if (a["name"][field] > b["name"][field]) return 1;
+      if (a["name"][field] < b["name"][field]) return -1;
       return 0;
     }
     const sortedEmployees = this.state.employees.sort(compare);
@@ -87,10 +70,11 @@ class employees extends Component {
     const searchTerm = this.state.search.toLowerCase();
     this.setState({
       filteredEmployees: this.state.employees.filter((employee) =>
-        employee.lastName.toLowerCase().includes(searchTerm)
+        employee.name.last.toLowerCase().includes(searchTerm)
       ),
     });
   };
+
 
   render() {
     return (
@@ -123,7 +107,7 @@ class employees extends Component {
                 <th
                   scope="col"
                   onClick={() => {
-                    this.sortEmployees("firstName");
+                    this.sortEmployees("first");
                   }}
                 >
                   <button className="btn btn-dark">First Name</button>
@@ -131,7 +115,7 @@ class employees extends Component {
                 <th
                   scope="col"
                   onClick={() => {
-                    this.sortEmployees("lastName");
+                    this.sortEmployees("last");
                   }}
                 >
                   <button className="btn btn-dark">Last Name</button>
@@ -140,13 +124,13 @@ class employees extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.filteredEmployees.map((employee) => (
-                <tr>
-                  <th scope="row">{employee.id}</th>
-                  <td>{employee.firstName}</td>
-                  <td>{employee.lastName}</td>
+              {this.state.filteredEmployees.map((employee, index) => (
+                <tr key = {employee.login.uuid}>
+                  <td scope="row">{index +1}</td>
+                  <td>{employee.name.first}</td>
+                  <td>{employee.name.last}</td>
                   <td>
-                    <img src={employee.thumbnail} alt="Employee Thumbnail" />
+                    <img src={employee.picture.thumbnail} alt="Employee Thumbnail" />
                   </td>
                 </tr>
               ))}
